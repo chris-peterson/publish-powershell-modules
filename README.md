@@ -1,4 +1,4 @@
-## Publish PowerShell Module(s)
+# Publish PowerShell Module(s)
 
 This GitHub Action enables you to publish PowerShell module(s) to the [PowerShell Gallery](https://powershellgallery.com)
 
@@ -42,3 +42,8 @@ jobs:
       name: PowerShell Gallery
       url: https://www.powershellgallery.com/packages/<YOUR_PACKAGE_HERE>
 ```
+
+## Acknowledgements
+
+* https://github.com/pcgeek86/publish-powershell-module-action
+* https://github.com/natescherer/publish-powershell-action
