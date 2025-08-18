@@ -2,17 +2,13 @@
 $ErrorActionPreference = 'Stop'
 
 # workaround for https://github.com/PowerShell/PSResourceGet/issues/1806
-Get-PSResourceRepository
+Get-PSResourceRepository | Out-Null
 
-$ModuleManifests = if ([string]::IsNullOrWhiteSpace($env:INPUT_MODULEPATH)) {
-    Get-ChildItem -Recurse -Filter '*.psd1' | Select-Object -ExpandProperty FullName
-} else {
-    @($env:INPUT_MODULEPATH)
-}
+$ModuleManifests = Get-ChildItem -Recurse -Filter '*.psd1' | Select-Object -ExpandProperty FullName
 
 foreach ($ManifestPath in $ModuleManifests) {
     $ModuleDir = Split-Path $ManifestPath -Parent
-    Write-Host "Processing module: $ManifestPath..."
+    Write-Host "Processing manifest: $ManifestPath..."
 
     # by design, [Test-ModuleManifest](https://github.com/PowerShell/PowerShell/blob/master/src/System.Management.Automation/engine/Modules/TestModuleManifestCommand.cs#L196)
     # will fail if a required module is not installed.  since we have no way of anticipating what modules an author might require
@@ -36,15 +32,10 @@ foreach ($ManifestPath in $ModuleManifests) {
     }
 
     Write-Host "Validating module manifest: $ManifestPath..."
-    Test-ModuleManifest -Path $ManifestPath
+    Test-ModuleManifest -Path $ManifestPath | Format-List
 
     Write-Host "Publishing '$ModuleDir' to PowerShell Gallery..."
-    $Params = @{
-        ApiKey     = $env:INPUT_NUGETAPIKEY
-        Path       = $ModuleDir
-        Repository = 'PSGallery'
-        Verbose    = $true
-    }
-    Publish-PSResource @Params
+    Publish-PSResource -ApiKey $env:INPUT_APIKEY -Path $ModuleDir
+
     Write-Host "...'$ModuleDir' published to PowerShell Gallery"
 }
