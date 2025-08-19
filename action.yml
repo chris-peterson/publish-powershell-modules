@@ -1,4 +1,4 @@
-name: Publish PowerShell Module(s)
+name: Publish PowerShell Modules
 description: Publishes PowerShell module(s) to the PowerShell Gallery
 inputs:
   ApiKey:

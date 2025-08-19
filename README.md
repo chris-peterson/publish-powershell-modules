@@ -12,7 +12,7 @@ For example, if you named your secret `PSGALLERY_API_KEY`:
 
 ```yaml
       - name: Publish Module(s) to PowerShell Gallery
-        uses: chris-peterson/publish-powershell-modules@v1
+        uses: chris-peterson/publish-powershell@v1
         with:
           ApiKey: ${{ secrets.PSGALLERY_API_KEY }}
 ```
@@ -35,7 +35,7 @@ jobs:
       - uses: actions/checkout@v5
 
       - name: Publish PowerShell Module
-        uses: chris-peterson/publish-powershell-modules@v1
+        uses: chris-peterson/publish-powershell@v1
         with:
           ApiKey: ${{ secrets.PSGALLERY_API_KEY }}
     environment:
