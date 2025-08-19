@@ -1,24 +1,49 @@
-## Publish PowerShell Module
+# Publish PowerShell Module(s)
 
-This GitHub Action enables you to publish a PowerShell module to the [PowerShell Gallery](https://powershellgallery.com).
+This GitHub Action enables you to publish PowerShell module(s) to the [PowerShell Gallery](https://powershellgallery.com)
 
 ## Usage
 
-1. Add a GitHub Actions Workflow configuration to your GitHub project, under `.github/workflows/main.yml`
-2. Configure a secret on your GitHub repository, containing your PowerShell Gallery NuGet API key
-3. Add the following step to your GitHub Actions job
+1. Add a GitHub Actions Workflow configuration to your GitHub project, (e.g. under `.github/workflows/main.yml`)
+2. Configure a secret on your GitHub repository, containing your PowerShell Gallery API key
+3. Add a step to your GitHub Actions job
 
-For example, if you named your secret `PS_GALLERY_KEY`:
+For example, if you named your secret `PSGALLERY_API_KEY`:
 
-```
-      - name: Publish Module to PowerShell Gallery
-        uses: pcgeek86/publish-powershell-module-action@v20
-        id: publish-module
+```yaml
+      - name: Publish Module(s) to PowerShell Gallery
+        uses: chris-peterson/publish-powershell-modules@v1
         with:
-          NuGetApiKey: ${{ secrets.PS_GALLERY_KEY }}
+          ApiKey: ${{ secrets.PSGALLERY_API_KEY }}
 ```
 
-## Assumptions
+## Example
 
-* You're writing a PowerShell script module (not a compiled module)
-* Your module is contained within a subfolder of your GitHub repository
+Here's a full listing for a hypothetical project
+
+```yaml
+name: CI
+
+on:
+  push:
+    branches: [ 'main']
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+
+      - name: Publish PowerShell Module
+        uses: chris-peterson/publish-powershell-modules@v1
+        with:
+          ApiKey: ${{ secrets.PSGALLERY_API_KEY }}
+    environment:
+      name: PowerShell Gallery
+      url: https://www.powershellgallery.com/packages/<YOUR_PACKAGE_HERE>
+```
+
+## Acknowledgements
+
+* https://github.com/pcgeek86/publish-powershell-module-action
+* https://github.com/natescherer/publish-powershell-action

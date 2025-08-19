@@ -1,7 +1,5 @@
-FROM mcr.microsoft.com/dotnet/sdk:5.0-alpine
+FROM mcr.microsoft.com/dotnet/sdk:9.0
 
-ADD ["entrypoint.ps1", "/data/"]
+COPY "entrypoint.ps1" "/"
 
-RUN chmod +x /data/entrypoint.ps1
-
-ENTRYPOINT ["/data/entrypoint.ps1"]
+ENTRYPOINT [ "/entrypoint.ps1" ]

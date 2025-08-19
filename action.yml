@@ -1,18 +1,11 @@
-name: Publish PowerShell Module
-description: Publishes a PowerShell module to the PowerShell Gallery.
+name: Publish PowerShell Module(s)
+description: Publishes PowerShell module(s) to the PowerShell Gallery
 inputs:
-  NuGetApiKey:
-    description: The NuGet API Key for PowerShell Gallery, with permission to push this module.
+  ApiKey:
+    description: The API Key for pushing to PowerShell Gallery
     required: true
-  modulePath:
-    description: The filesystem path to the module to publish.  If not provided, all directories that contains a .psd1 are published.
-    required: false
-outputs:
-  successfullyPublished: # id of output
-    description: Whether or not the publish command was successful
 runs:
   using: docker
   image: Dockerfile
   args:
-    - ${{ inputs.NuGetApiKey }}
-    - ${{ inputs.modulePath }}
+    - ${{ inputs.ApiKey }}
