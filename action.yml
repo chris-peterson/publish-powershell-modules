@@ -1,5 +1,8 @@
 name: Publish PowerShell Modules
 description: Publishes PowerShell module(s) to the PowerShell Gallery
+branding:
+  icon: upload-cloud
+  color: green
 inputs:
   ApiKey:
     description: The API Key for pushing to PowerShell Gallery
